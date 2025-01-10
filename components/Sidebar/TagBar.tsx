@@ -21,9 +21,10 @@ export const TagBar = (props: TagBarProps) => {
   if (!node?.tags || node?.tags?.[0] === null) {
     return null
   }
+	const tags = Array.from(new Set(node.tags))
   return (
     <Flex mb={2} flexWrap="wrap">
-      {node?.tags?.map?.((tag: string) => {
+      {tags.map?.((tag: string) => {
         const bl: string[] = filter.tagsBlacklist ?? []
         const wl: string[] = filter.tagsWhitelist ?? []
         const blackList: boolean = bl.includes(tag)
