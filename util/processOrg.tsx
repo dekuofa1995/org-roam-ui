@@ -28,7 +28,7 @@ import remarkRehype from 'remark-rehype'
 
 import { PreviewLink } from '../components/Sidebar/Link'
 import { LinksByNodeId, NodeByCite, NodeById } from '../pages'
-import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
+import React, { createContext, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { OrgImage } from '../components/Sidebar/OrgImage'
 import { Section } from '../components/Sidebar/Section'
 import { NoteContext } from './NoteContext'
@@ -39,6 +39,7 @@ import { toString } from 'hast-util-to-string'
 import { Box, chakra, Code } from '@chakra-ui/react'
 import { normalizeLinkEnds } from './normalizeLinkEnds'
 import * as prod from 'react/jsx-runtime'
+import Prism from 'prismjs'
 
 export interface ProcessedOrgProps {
 	nodeById: NodeById
@@ -195,13 +196,18 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
 							</chakra.blockquote>
 						),
 						p: ({ children }) => {
-							return <p lang="en">{children as ReactNode}</p>
+							return <div lang="en">{children as ReactNode}</div>
 						},
 						code: ({ children, className }) => {
 							const isInlineCode = className?.includes('inline-code')
+							const elRef = useRef<any>(null)
+							useEffect(() => {
+								!isInlineCode && elRef.current && Prism.highlightElement(elRef.current)
+							}, [elRef.current])
 							return (
 								<chakra.code
 									className={className}
+									ref={elRef}
 									px={1}
 									py={0.5}
 									rounded="sm"

@@ -97,6 +97,7 @@ export type Scope = {
 	nodeIds: string[]
 	excludedNodeIds: string[]
 }
+// <link rel="stylesheet" href="prism-tomorrow.min.css" />
 export default function Home() {
 	// only render on the client
 	const [showPage, setShowPage] = useState(false)
@@ -111,7 +112,6 @@ export default function Home() {
 		<>
 			<Head>
 				<title>{TITLE_NAME}</title>
-				<link rel="stylesheet" href="prism-tomorrow.min.css" />
 			</Head>
 			<div id="modal-root" />
 			<GraphPage />
