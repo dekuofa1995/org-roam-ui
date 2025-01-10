@@ -4,7 +4,17 @@
 		[
 			"prismjs",
 			{
-				"languages": ["javascript", "python", "plantuml", "html", "bash", "clojure", "sql", "csv"],
+				"languages": [
+					"javascript",
+					"python",
+					"plantuml",
+					"html",
+					"bash",
+					"clojure",
+					"sql",
+					"csv",
+					"json"
+				],
 				"plugins": ["line-numbers", "copy-to-clipboard", "inline-color"],
 				"theme": "tomorrow",
 				"css": true
