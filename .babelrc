@@ -15,7 +15,7 @@
 					"csv",
 					"json"
 				],
-				"plugins": ["line-numbers", "copy-to-clipboard", "inline-color"],
+				"plugins": ["copy-to-clipboard"],
 				"theme": "tomorrow",
 				"css": true
 			}
