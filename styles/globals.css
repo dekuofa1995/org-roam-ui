@@ -1,32 +1,32 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  overflow: hidden;
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	overflow: hidden;
 }
 h1 {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 table {
-  border-style: hidden;
+	border-style: hidden;
 }
 
 th,
 tr,
 td {
-  padding: 0px 4px;
-  border-width: 1px;
-  border-color: gray;
-  border-style: dashed;
+	padding: 0px 4px;
+	border-width: 1px;
+	border-color: gray;
+	border-style: dashed;
 }
 
 pre.src-block[class] {
-  font-size: 12px;
+	font-size: 1rem;
 }
