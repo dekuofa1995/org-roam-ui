@@ -36,10 +36,11 @@ import { OrgRoamLink, OrgRoamNode } from '../api'
 
 // @ts-expect-error non-ESM unified means no types
 import { toString } from 'hast-util-to-string'
-import { Box, chakra, Code } from '@chakra-ui/react'
+import { Box, chakra, Code, IconButton } from '@chakra-ui/react'
 import { normalizeLinkEnds } from './normalizeLinkEnds'
 import * as prod from 'react/jsx-runtime'
 import Prism from 'prismjs'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 export interface ProcessedOrgProps {
 	nodeById: NodeById
@@ -57,6 +58,14 @@ export interface ProcessedOrgProps {
 	useInheritance: boolean
 }
 
+const convertToFoldAttr = (value: string | undefined): boolean | undefined => {
+	if (value === 'false') {
+		return false
+	} else if (value === 'true') {
+		return true
+	}
+	return undefined
+}
 export const ProcessedOrg = (props: ProcessedOrgProps) => {
 	const {
 		nodeById,
@@ -174,6 +183,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
 							if (className && className?.slice(-1) === `${previewNode.level}`) {
 								return <Box>{children}</Box>
 							}
+
 							return (
 								<Section {...{ outline, collapse }} className={className ?? ''}>
 									{children}
@@ -198,15 +208,36 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
 						p: ({ children }) => {
 							return <div lang="en">{children as ReactNode}</div>
 						},
-						code: ({ children, className }) => {
+						code: ({ children, className, ...args }) => {
 							const isInlineCode = className?.includes('inline-code')
 							const elRef = useRef<any>(null)
+							const [fold, setFold] = useState(convertToFoldAttr((args as any)['fold']))
 							useEffect(() => {
-								!isInlineCode && elRef.current && Prism.highlightElement(elRef.current)
-							}, [elRef.current])
-							return (
+								!isInlineCode && !fold && elRef.current && Prism.highlightElement(elRef.current)
+							}, [elRef.current, fold])
+							return fold ? (
+								<div
+									style={{ display: 'flex', alignItems: 'center' }}
+									className="fold-toggle"
+									onClick={() => setFold(!fold)}
+								>
+									<IconButton
+										// className="viewerHeadingButton"
+										_focus={{}}
+										_active={{}}
+										aria-label="Expand heading"
+										//mr={1}
+										size="lg"
+										variant="subtle"
+										icon={fold ? <ChevronDownIcon /> : <ChevronUpIcon />}
+										height={2}
+										width={2}
+									></IconButton>
+									<span>{fold ? 'Show code' : 'Hide code'}</span>
+								</div>
+							) : (
 								<chakra.code
-									className={className}
+									className={`${className}`}
 									ref={elRef}
 									px={1}
 									py={0.5}
